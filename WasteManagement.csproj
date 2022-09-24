@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="PreBuild.target" />
   <ItemGroup>
+    <Documentation Include="$(MSBuildProjectDirectory)\documentation\*" />
     <SourceFiles Include="$(MSBuildProjectDirectory)\LICENSE" />
     <SourceFiles Include="$(MSBuildProjectDirectory)\README.md" />
   </ItemGroup>
   <Target Name="ZipOutputPath" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
     <MakeDir Directories="$(MSBuildProjectDirectory)\dist"/>
     <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+    <Copy SourceFiles="@(Documentation)" DestinationFolder="$(OutputPath)\documentation" ContinueOnError="true" />
     <ZipDirectory
         SourceDirectory="$(OutputPath)"
         DestinationFile="$(MSBuildProjectDirectory)\dist\$(MSBuildProjectName)-$(Configuration).zip" />
