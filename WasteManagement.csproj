@@ -1,17 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Import Project="PreBuild.target" />
-  <ItemGroup>
-    <Documentation Include="$(MSBuildProjectDirectory)\documentation\*" />
-    <SourceFiles Include="$(MSBuildProjectDirectory)\LICENSE" />
-    <SourceFiles Include="$(MSBuildProjectDirectory)\README.md" />
-  </ItemGroup>
+  <PropertyGroup>
+    <DistDir>$(MSBuildProjectDirectory)\dist</DistDir>
+    <Release>$(DistDir)\$(MSBuildProjectName)-$(Configuration)</Release>
+  </PropertyGroup>
   <Target Name="ZipOutputPath" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
-    <MakeDir Directories="$(MSBuildProjectDirectory)\dist"/>
-    <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
-    <Copy SourceFiles="@(Documentation)" DestinationFolder="$(OutputPath)\documentation" ContinueOnError="true" />
-    <ZipDirectory
-        SourceDirectory="$(OutputPath)"
-        DestinationFile="$(MSBuildProjectDirectory)\dist\$(MSBuildProjectName)-$(Configuration).zip" />
+    <ItemGroup>
+      <SourceFiles Include="$(OutDir)\*.*" />
+      <Documentation Include="$(MSBuildProjectDirectory)\CHANGELOG" />
+      <Documentation Include="$(MSBuildProjectDirectory)\LICENSE" />
+      <Documentation Include="$(MSBuildProjectDirectory)\README.md" />
+      <DocumentationFolder Include="$(MSBuildProjectDirectory)\docs\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(Release)\Mods\$(MSBuildProjectName)\" ContinueOnError="false" />
+    <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(Release)\Mods\$(MSBuildProjectName)" ContinueOnError="false" />
+    <Copy SourceFiles="@(Documentation)" DestinationFolder="$(Release)" ContinueOnError="false" />
+    <Copy SourceFiles="@(DocumentationFolder)" DestinationFolder="$(Release)\docs" ContinueOnError="false" />
+    <ZipDirectory SourceDirectory="$(Release)" DestinationFile="$(Release).zip" ContinueOnError="false" />
   </Target>
   <PropertyGroup>
     <OutputType>Library</OutputType>
