@@ -5,9 +5,9 @@ namespace WasteManagement;
 
 public partial class WasteManagementIds
 {
-	public partial class Machines
-	{
-		public static readonly MachineID IncinerationPlant = Ids.Machines.CreateId("IncinerationPlant");
-	}
-
+    public partial class Machines
+    {
+        public static readonly MachineID IncinerationPlant = Ids.Machines.CreateId("IncinerationPlant");
+        public static readonly MachineID WasteRecoveryPlant = Ids.Machines.CreateId("WasteRecoveryPlant");
+    }
 }
