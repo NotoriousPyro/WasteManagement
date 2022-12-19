@@ -1,10 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="PreBuild.target" />
-  <PropertyGroup>
-    <DistDir>$(MSBuildProjectDirectory)\dist</DistDir>
-    <Release>$(DistDir)\$(MSBuildProjectName)-$(Configuration)</Release>
-  </PropertyGroup>
+  <Import Project="PreBuild.target" />
+  <Target Name="PostBuild" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
+    <Exec
+      Command="powershell -NonInteractive -ExecutionPolicy Unrestricted -File .\build.ps1"
+      WorkingDirectory="$(MSBuildProjectDirectory)"
+    />
+  </Target>
   <Target Name="ZipOutputPath" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
+    <PropertyGroup>
+      <DistDir>$(MSBuildProjectDirectory)\release</DistDir>
+      <Release>$(DistDir)\$(MSBuildProjectName)-$(Configuration)-v$(Version)</Release>
+    </PropertyGroup>
     <ItemGroup>
       <SourceFiles Include="$(OutDir)\*.*" />
       <Documentation Include="$(MSBuildProjectDirectory)\CHANGELOG" />
@@ -20,10 +26,17 @@
   </Target>
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <Configurations>Debug;Release</Configurations>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Authors>NotoriousPyro</Authors>
     <LangVersion>10.0</LangVersion>
+    <Version>1.0.3</Version>
+    <Title>WasteManagement</Title>
+    <Description>WasteManagement</Description>
+    <Company>NotoriousPyro</Company>
+    <Product>NotoriousPyro.CoI.WasteManagement</Product>
+    <Copyright>Copyright © NotoriousPyro</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

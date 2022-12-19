@@ -1,19 +1,15 @@
-﻿using Mafi.Base;
+﻿using Mafi;
+using Mafi.Base;
 using Mafi.Core.Mods;
-using Mafi.Core.Ports.Io;
 using Mafi.Core.Entities;
 using Mafi.Core.Factory.Recipes;
 using Mafi.Core.Products;
-using Mafi;
-using Mafi.Core.Prototypes;
 using Mafi.Core.Factory.Machines;
-using Mafi.Core.Game;
 
-namespace WasteManagement;
+namespace WasteManagement.Machines;
 
-internal class WasteManagementData : IModData
+internal class IncinerationPlantData : IModData
 {
-  
     private static void registerIncinerationRecipe(
         ProtoRegistrator registrator,
         MachineProto.ID machineId,
@@ -31,15 +27,15 @@ internal class WasteManagementData : IModData
             .SetDuration(duration)
             .AddOutput(8, steamOut, "CD")
             .AddOutput(4 * pollution, Ids.Products.Exhaust, "X")
-            .AddOutput(3 * pollution, Ids.Products.CarbonDioxide, "Y")
         .BuildAndAdd();
 
     private static void registerIncinerationPlant(
         ProtoRegistrator registrator,
         MachineProto.ID machineId
-    ) {
+    )
+    {
         registrator.MachineProtoBuilder
-            .Start("Incineration Plant", machineId)
+            .Start("Incineration plant", machineId)
             .Description("An inefficient process to destroy waste under high temperatures and capture the exhaust gasses.")
             .SetCost(Costs.Build.CP3(45).Workers(8))
             .SetElectricityConsumption(Mafi.Electricity.FromKw(250))
@@ -54,8 +50,8 @@ internal class WasteManagementData : IModData
                 "                ~     @          "
             )
             .AddParticleParams(ParticlesParams.Loop("Smoke", useUtilizationOnAlpha: true))
-            .SetPrefabPath("Assets/Base/Machines/MetalWorks/FiltrationStation.prefab")
-            .SetMachineSound("Assets/Base/Machines/MetalWorks/FiltrationStation/FiltrationStationSound.prefab")
+            .SetPrefabPath(Assets.Base.Machines.MetalWorks.FiltrationStation_prefab)
+            .SetMachineSound(Assets.Base.Machines.MetalWorks.FiltrationStation.FiltrationStationSound_prefab)
             .SetCustomIconPath(registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.ExhaustScrubber).Graphics.IconPath)
             .BuildAndAdd();
     }
@@ -63,12 +59,23 @@ internal class WasteManagementData : IModData
     private static void registerIncinerationRecipes(
         ProtoRegistrator registrator,
         MachineProto.ID machineId
-    ) {
+    )
+    {
         registerIncinerationRecipe(
             registrator,
             machineId,
             WasteManagementIds.Recipes.LandfillIncineration,
             Ids.Products.Waste,
+            Ids.Products.SteamHi,
+            12,
+            10.Seconds(),
+            2
+        );
+        registerIncinerationRecipe(
+            registrator,
+            machineId,
+            WasteManagementIds.Recipes.LandfillDepletedIncineration,
+            WasteManagementIds.Products.WasteDepleted,
             Ids.Products.SteamHi,
             12,
             10.Seconds(),
@@ -126,9 +133,9 @@ internal class WasteManagementData : IModData
         );
     }
 
-    public void RegisterData(ProtoRegistrator registrator) {
-		MachineProto.ID incinerationPlantMachineId = WasteManagementIds.Machines.IncinerationPlant;
-        registerIncinerationPlant(registrator, incinerationPlantMachineId);
-        registerIncinerationRecipes(registrator, incinerationPlantMachineId);
+    public void RegisterData(ProtoRegistrator registrator)
+    {
+        registerIncinerationPlant(registrator, WasteManagementIds.Machines.IncinerationPlant);
+        registerIncinerationRecipes(registrator, WasteManagementIds.Machines.IncinerationPlant);
     }
 }
