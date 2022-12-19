@@ -50,8 +50,8 @@ internal class IncinerationPlantData : IModData
                 "                ~     @          "
             )
             .AddParticleParams(ParticlesParams.Loop("Smoke", useUtilizationOnAlpha: true))
-            .SetPrefabPath("Assets/Base/Machines/MetalWorks/FiltrationStation.prefab")
-            .SetMachineSound("Assets/Base/Machines/MetalWorks/FiltrationStation/FiltrationStationSound.prefab")
+            .SetPrefabPath(Assets.Base.Machines.MetalWorks.FiltrationStation_prefab)
+            .SetMachineSound(Assets.Base.Machines.MetalWorks.FiltrationStation.FiltrationStationSound_prefab)
             .SetCustomIconPath(registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.ExhaustScrubber).Graphics.IconPath)
             .BuildAndAdd();
     }

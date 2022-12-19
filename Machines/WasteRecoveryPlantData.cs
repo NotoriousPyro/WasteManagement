@@ -44,8 +44,8 @@ internal class WasteRecoveryPlantData : IModData
                 "   [3][3][3][3][3][3][3][3]   "
             )
             .AddParticleParams(ParticlesParams.Loop("Smoke", useUtilizationOnAlpha: true))
-            .SetPrefabPath("Assets/Base/Machines/Food/Mill.prefab")
-            .SetMachineSound("Assets/Base/Machines/Food/Mill/MillSound.prefab")
+            .SetPrefabPath(Assets.Base.Machines.Food.Mill_prefab)
+            .SetMachineSound(Assets.Base.Machines.Food.Mill.MillSound_prefab)
             .SetCustomIconPath(registrator.PrototypesDb.GetOrThrow<MachineProto>(Ids.Machines.FoodMill).Graphics.IconPath)
             .SetAnimationParams(AnimationParams.Loop(60.Percent()))
             .BuildAndAdd();

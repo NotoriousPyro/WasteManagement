@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="PreBuild.target" />
+  <Target Name="PostBuild" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
+    <Exec
+      Command="powershell -NonInteractive -ExecutionPolicy Unrestricted -File .\build.ps1"
+      WorkingDirectory="$(MSBuildProjectDirectory)"
+    />
+  </Target>
   <Target Name="ZipOutputPath" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
     <PropertyGroup>
       <DistDir>$(MSBuildProjectDirectory)\release</DistDir>

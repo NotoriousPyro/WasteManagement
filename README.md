@@ -1,4 +1,5 @@
 # WasteManagement
+## Version 1.0.4 (compatible CoI version: 0.4.12 - 0.4.13)
 
 Provides various waste management buildings to the game.
 
@@ -8,8 +9,6 @@ Currently provides:
 More may come... please create an issue for any suggestions or bugs.
 
 # How to install
-
-> :warning: **You will need to start a new game to play this mod. This is a restriction of CoI.**
 
 Download the latest release: https://github.com/NotoriousPyro/WasteManagement/releases
 
@@ -22,9 +21,7 @@ Download the latest release: https://github.com/NotoriousPyro/WasteManagement/re
 
 2. Verify inside 'Mods' folder, each sub-folder has **a dll file with the same name as the folder**, it is fine if other DLLs are also present.
 
-3. Enable the `Enable mods` options in the ingame settings.
-
-4. Start a new game!
+3. Enable the `Enable mods` options in the ingame settings or select the mod in load game menu.
 
 # How to use
 
@@ -33,7 +30,8 @@ Download the latest release: https://github.com/NotoriousPyro/WasteManagement/re
 
 ## Research
 * **Incineration plant**: dependant on Exhaust Filtration first being completed.
-![Research: Incineration Plant](docs/research_incinerationplant.png)
+* **Waste recovery plant**: dependant on Incineration plant first being completed.
+![Research](docs/research.png)
 
 ## Recipes
 * Incineration plant
